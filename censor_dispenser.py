@@ -27,7 +27,6 @@ def censor_list_or_phrases(email, word_list):
 proprietary_terms = ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithm", "her",
                      "herself"]
 
-
 print(censor_list_or_phrases(email_two, proprietary_terms))
 
 
@@ -59,7 +58,6 @@ negative_words = ["concerned", "behind", "danger", "dangerous", "alarming", "ala
                   "unhappy", "bad", "upset", "awful", "broken", "damage", "damaging", "dismal", "distressed",
                   "distressing", "concerning", "horrible", "horribly", "questionable"]
 
-
 print(censor_negative_words(email_three, negative_words))
 
 
@@ -84,6 +82,8 @@ def censor_multi_list_words(email, lists):
     email_updated_censored = re.findall("\*+", email_updated)
 
     index_list_two = []
+    index_list_two_deduct_one = []
+    index_list_two_add_one = []
     email_updated_split_second = email_updated.split()
 
     for i in range(len(email_updated_split_second)):
@@ -100,6 +100,16 @@ def censor_multi_list_words(email, lists):
                 index_list_two.append(i)
                 email_updated_censored.clear()
                 break
+
+    for i in index_list_two:
+        index_list_two_deduct_one.append(i - 1)
+        index_list_two_add_one.append(i + 1)
+
+    for i in index_list_two_deduct_one:
+        email_updated = censor_word(email_updated, email_updated_split_second[i])
+
+    for i in index_list_two_add_one:
+        email_updated = censor_word(email_updated, email_updated_split_second[i])
 
     return email_updated
 
